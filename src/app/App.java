@@ -6,8 +6,10 @@
 package app;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import model.Alumne;
 import model.Grup;
 import model.Nivell;
@@ -16,6 +18,7 @@ import model.Telefono;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -29,6 +32,8 @@ public class App {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         int op;
+        Alumne alum = null;
+        Grup grup = null;
         //CREAMOS CONEXION
         //SessionFactory sessionFactory;
         //Configuration configuration = new Configuration();
@@ -45,46 +50,49 @@ public class App {
             switch (op) {
 
                 case 1:
+                    //CREAR OBJETO
                     session.beginTransaction();
-                    //Grup grup=new Grup("B2ME", Nivell.CF, new Alumne());
-                    
-                    Alumne alum=new Alumne("Pepa", new Telefono(2221457), Sexe.MUJER, Calendar.getInstance().getTime(), 2, new Grup("B11M ", Nivell.CF, new Alumne()));
-                    
+
+                    alum = new Alumne("Juana", new Telefono(2221457), Sexe.MUJER, Calendar.getInstance().getTime(), 4, null);
+                    /*grup = new Grup("2ESO", Nivell.CF, alum);
+                    Set<Alumne> listaAlumnes = new HashSet<>();
+                    listaAlumnes.add(alum);
+                    grup.setAlumnes(listaAlumnes);*/
+
                     session.save(alum);
+                    //session.save(grup);
                     session.getTransaction().commit();
-                    session.close();
                     break;
 
                 case 2:
+                    //BORRAR OBJETO ALUMNO
                     session.beginTransaction();
-
+                    session.delete(alum);
+                    session.getTransaction().commit();
                     break;
 
                 case 3:
                     session.beginTransaction();
-
+                    grup=new Grup("2ESO", Nivell.BATXILLERAT, alum);
+                    session.saveOrUpdate(grup);
+                    session.getTransaction().commit();
+                    break;
+                    
+                case 4:
+                    
                     break;
 
                 case 0:
                     System.out.println("Saliendo...");
+                    session.close();
+                    factory.close();
                     break;
             }
-            //CERRAR CONEXION
-            factory.close();
         } while (op != 0);
-
-        /*
-        Profesor profesor2 = (Profesor) session.get(Profesor.class, 1);
-        System.out.println(profesor2);
-
-        profesor.setNombre("Manola");
-        session.update(profesor);
-
-        //session.saveOrUpdate(profesor);*/
     }
 
     private static void menu() {
-        System.out.print("--MENU--\t"
+        System.out.print("--MENU--\n"
                 + "1. Crear objeto\n"
                 + "2. Borrar objeto\n"
                 + "3. Modificar objeto\n"

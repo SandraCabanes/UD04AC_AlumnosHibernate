@@ -24,7 +24,7 @@
       <property name="susp" column="susp" type="integer"/>
       
       <many-to-one name="grup">
-          <column name="codi"/>
+          <column name="grup"/>
       </many-to-one>
       
       <set name="grups" cascade="all" inverse="true">

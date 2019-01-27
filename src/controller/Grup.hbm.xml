@@ -13,12 +13,12 @@
       </property>
       
       <many-to-one name="delegat">
-          <column name="nexp"/>
+          <column name="delegat"/>
       </many-to-one>
       
       <set name="alumnes" cascade="all" inverse="true">
           <key>
-              <column name="delegat"/>
+              <column name="grup"/>
           </key>
           <one-to-many class="model.Alumne"/>
       </set> 
