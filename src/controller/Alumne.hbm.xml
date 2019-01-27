@@ -2,36 +2,36 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping">
 
 <hibernate-mapping>
-  <class name="model.Alumne" table="alumnes">
-      <id column="nexp" name="nexp" type="integer">
-          <generator class="increment"/>
-      </id>
+    <class name="model.Alumne" table="alumnes">
+        <id column="nexp" name="nexp" type="integer">
+            <generator class="increment"/>
+        </id>
       
-      <property name="nom" column="nom" type="string"/>
+        <property name="nom" column="nom" type="string"/>
       
-      <component name="telefono">
-          <property name="telefono" column="telefono" type="integer"/>
-      </component>
+        <component name="telefono">
+            <property name="telefono" column="telefono" type="integer"/>
+        </component>
       
-       <property name="sexe">
-          <type name="org.hibernate.type.EnumType">
-              <param name="enumClass">model.Sexe</param>
-              <param name="type">-6</param>
-          </type>
-      </property>
+        <property name="sexe">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">model.Sexe</param>
+                <param name="type">-6</param>
+            </type>
+        </property>
       
-      <property name="datanaix" column="datanaix" type="date"/>
-      <property name="susp" column="susp" type="integer"/>
+        <property name="datanaix" column="datanaix" type="date"/>
+        <property name="susp" column="susp" type="integer"/>
       
-      <many-to-one name="grup">
-          <column name="grup"/>
-      </many-to-one>
+        <many-to-one name="grup">
+            <column name="grup"/>
+        </many-to-one>
       
-      <set name="grups" cascade="all" inverse="true">
-          <key>
-              <column name="delegat"/>
-          </key>
-          <one-to-many class="model.Grup"/>
-      </set> 
-  </class>
+        <set name="grups" cascade="all" inverse="true">
+            <key>
+                <column name="delegat"/>
+            </key>
+            <one-to-many class="model.Grup"/>
+        </set> 
+    </class>
 </hibernate-mapping>

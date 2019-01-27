@@ -12,10 +12,11 @@ import java.util.Set;
  * @author Sandra
  */
 public class Grup {
+
     private String codi;
     private Nivell nivell;
     private Alumne delegat;
-    private Set<Alumne>alumnes;
+    private Set<Alumne> alumnes;
 
     public Grup() {
     }
@@ -25,8 +26,6 @@ public class Grup {
         this.nivell = nivell;
         this.delegat = delegat;
     }
-
-   
 
     public String getCodi() {
         return codi;
@@ -52,8 +51,6 @@ public class Grup {
         this.delegat = delegat;
     }
 
-  
-
     public Set<Alumne> getAlumnes() {
         return alumnes;
     }
@@ -66,6 +63,5 @@ public class Grup {
     public String toString() {
         return "Grup{" + "codi=" + codi + ", nivell=" + nivell + ", delegat=" + delegat + '}';
     }
-    
-    
+
 }

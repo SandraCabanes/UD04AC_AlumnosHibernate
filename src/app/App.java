@@ -6,10 +6,8 @@
 package app;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import model.Alumne;
 import model.Grup;
 import model.Nivell;
@@ -34,6 +32,7 @@ public class App {
         int op;
         Alumne alum = null;
         Grup grup = null;
+        Query query = null;
         //CREAMOS CONEXION
         //SessionFactory sessionFactory;
         //Configuration configuration = new Configuration();
@@ -72,14 +71,73 @@ public class App {
                     break;
 
                 case 3:
+                    //MODIFICAR UN OBJETO GRUPO
                     session.beginTransaction();
-                    grup=new Grup("2ESO", Nivell.BATXILLERAT, alum);
+                    grup = new Grup("2ESO", Nivell.BATXILLERAT, alum);
                     session.saveOrUpdate(grup);
                     session.getTransaction().commit();
                     break;
+
+                case 4: //CONSULTAS
                     
-                case 4:
+                    //NOM ALUMNES HOMES MAJORS DE 18 ANYS
+                    System.out.println("\n NOM ALUMNES HOMES MAJORS DE 18 ANYS");
+                    query = session.createQuery("SELECT a FROM Alumne a WHERE sexe=1");
+                    List<Alumne> listHomes = query.list();
+                    for (Alumne datos : listHomes) {
+                        int c1 = Calendar.getInstance().getTime().getYear();
+                        int c2 = datos.getDatanaix().getYear();
+                        int diff = c1 - c2;
+                        if (diff >= 18) {
+                            System.out.println(datos.getNom());
+                        }
+                    }
+
+                    //NOM ALUMNES QUE HAN SUSPES LA MATEIXA ASIGNATURA I AMB CONGNOMS QUE COMENÇEN AMB 'F'
+                    System.out.println("\n NOM ALUMNES QUE HAN SUSPES LA MATEIXA ASIGNATURA I AMB CONGNOMS QUE COMENÇEN AMB 'F'");
+                    query = session.createQuery("SELECT a FROM Alumne a WHERE susp IN (SELECT susp FROM Alumne a ) AND a.nom LIKE 'F%'");
+
+                    List<Alumne> listSupesNom = query.list();
+                    for (Alumne a : listSupesNom) {
+                        System.out.println(a.getNom());
+                        System.out.println(a.getSusp());
+                    }
+
+                    //NEXP I NOM D'ALUMNES I CODI DE GRUP EN QUE SON DELEGATS
+                    System.out.println("\n NEXP I NOM D'ALUMNES I CODI DE GRUP EN QUE SON DELEGATS");
+                    query = session.createQuery("SELECT a.nexp, a.nom, g.codi FROM Alumne a, Grup g WHERE a.grup=g.codi");
+
+                    List<Object[]> listDelegats = query.list();
+                    for (Object[] d : listDelegats) {
+                        System.out.println(d[0] + " -- " + d[1] + " -- " + d[2]);
+                    }
+
+                    //ALUMNES QUE HAN SUSPES MES QUE LA MITJA
+                    System.out.println("\n ALUMNES QUE HAN SUSPES MES QUE LA MITJA");
+                    query = session.createQuery("SELECT a.nom FROM Alumne a WHERE susp > (SELECT AVG(susp) FROM Alumne)");
                     
+                    List<Object> listSuperiorMedia = query.list();
+                    for (Object a : listSuperiorMedia) {
+                        System.out.println(a);
+                    }
+                    
+                    //ALUMNES QUE HAN SUSPES MES QUE 2 ASSIGNATURES
+                    System.out.println("\n ALUMNES QUE HAN SUSPES MES QUE 2 ASSIGNATURES");
+                    query = session.createQuery("SELECT a.nom FROM Alumne a WHERE susp > 2");
+                    
+                    List<Object> listSuspesos = query.list();
+                    for (Object a : listSuspesos) {
+                        System.out.println(a);
+                    }
+                    
+                    //GRUPS I NUMERO D'ALUMNES MATRICULATS
+                    System.out.println("\n GRUPS I NUMERO D'ALUMNES MATRICULATS");
+                    query = session.createQuery("SELECT g.codi , COUNT(*) FROM Alumne a, Grup g WHERE g.codi=a.grup GROUP BY codi");
+                    
+                    List<Object[]> listAlumnesGrup = query.list();
+                    for (Object[] dato : listAlumnesGrup) {
+                        System.out.println(dato[0]+" -- "+dato[1]);
+                    }
                     break;
 
                 case 0:
@@ -97,6 +155,7 @@ public class App {
                 + "2. Borrar objeto\n"
                 + "3. Modificar objeto\n"
                 + "4. Consultas\n"
+                + "0. Salir\n"
                 + "Elige una opción: ");
     }
 
