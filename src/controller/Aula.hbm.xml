@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping">
+
+<hibernate-mapping>
+    <class name="model.Aula" table="aulas">
+        <id column="codiAula" name="codiAula" type="string"/>
+        <property name="nom"/>
+
+    </class>
+</hibernate-mapping>

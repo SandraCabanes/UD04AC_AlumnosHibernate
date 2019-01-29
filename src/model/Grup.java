@@ -16,6 +16,7 @@ public class Grup {
     private String codi;
     private Nivell nivell;
     private Alumne delegat;
+    private Aula aula;
     private Set<Alumne> alumnes;
 
     public Grup() {
@@ -59,6 +60,15 @@ public class Grup {
         this.alumnes = alumnes;
     }
 
+    public Aula getAula() {
+        return aula;
+    }
+
+    public void setAula(Aula aula) {
+        this.aula = aula;
+    }
+
+    
     @Override
     public String toString() {
         return "Grup{" + "codi=" + codi + ", nivell=" + nivell + ", delegat=" + delegat + '}';

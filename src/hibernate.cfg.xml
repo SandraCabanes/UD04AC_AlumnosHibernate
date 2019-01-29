@@ -8,12 +8,10 @@
     <property name="hibernate.connection.password">alumne</property>
     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
     <property name="hibernate.show_sql">true</property>
-    
     <mapping resource="controller/Grup.hbm.xml"/>
-        <mapping class="model.Grup"/>
-
+    <mapping class="model.Grup"/>
     <mapping resource="controller/Alumne.hbm.xml"/>
-        <mapping class="model.Alumne"/>
-
+    <mapping class="model.Alumne"/>
+    <mapping resource="controller/Aula.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -16,6 +16,8 @@
             <column name="delegat"/>
         </many-to-one>
       
+      <one-to-one name="aula" cascade="all" />
+      
         <set name="alumnes" cascade="all" inverse="true">
             <key>
                 <column name="grup"/>

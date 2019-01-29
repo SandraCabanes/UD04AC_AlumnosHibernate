@@ -6,9 +6,12 @@
 package app;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import model.Alumne;
+import model.Aula;
 import model.Grup;
 import model.Nivell;
 import model.Sexe;
@@ -52,14 +55,22 @@ public class App {
                     //CREAR OBJETO
                     session.beginTransaction();
 
-                    alum = new Alumne("Juana", new Telefono(2221457), Sexe.MUJER, Calendar.getInstance().getTime(), 4, null);
-                    /*grup = new Grup("2ESO", Nivell.CF, alum);
+                    alum = new Alumne("Manuela", new Telefono(2221457), Sexe.MUJER, Calendar.getInstance().getTime(), 4, null);
+                    
+                    grup = new Grup("3ESO", Nivell.BATXILLERAT, alum);
                     Set<Alumne> listaAlumnes = new HashSet<>();
                     listaAlumnes.add(alum);
-                    grup.setAlumnes(listaAlumnes);*/
+                    grup.setAlumnes(listaAlumnes);
+                    
+                    Aula aula=new Aula("3ESO","Clase");
+                    grup.setAula(aula);
+                    
+                    alum.setGrup(grup);
+                    //session.saveOrUpdate(alum);
 
                     session.save(alum);
-                    //session.save(grup);
+                    session.save(grup);
+                    session.save(aula);
                     session.getTransaction().commit();
                     break;
 
