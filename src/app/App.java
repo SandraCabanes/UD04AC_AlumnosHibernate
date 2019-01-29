@@ -93,15 +93,12 @@ public class App {
                     
                     //NOM ALUMNES HOMES MAJORS DE 18 ANYS
                     System.out.println("\n NOM ALUMNES HOMES MAJORS DE 18 ANYS");
-                    query = session.createQuery("SELECT a FROM Alumne a WHERE sexe=1");
+                    query = session.createQuery("SELECT a FROM Alumne a WHERE sexe=1 AND datanaix < '2001-01-01'");
                     List<Alumne> listHomes = query.list();
                     for (Alumne datos : listHomes) {
-                        int c1 = Calendar.getInstance().getTime().getYear();
-                        int c2 = datos.getDatanaix().getYear();
-                        int diff = c1 - c2;
-                        if (diff >= 18) {
-                            System.out.println(datos.getNom());
-                        }
+                        
+                            System.out.println(datos.getNom()+" -- "+datos.getSexe()+" -- "+datos.getDatanaix());
+                        
                     }
 
                     //NOM ALUMNES QUE HAN SUSPES LA MATEIXA ASIGNATURA I AMB CONGNOMS QUE COMENÇEN AMB 'F'

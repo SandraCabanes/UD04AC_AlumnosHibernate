@@ -10,5 +10,5 @@ package model;
  * @author Sandra
  */
 public enum Sexe {
-    HOMBRE, MUJER
+    MUJER,HOMBRE
 }
